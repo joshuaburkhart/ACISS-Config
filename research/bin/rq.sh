@@ -1,18 +1,18 @@
 #USAGE:
-#./rq.sh <job name> <node name> <queue name> <name of file to execute with arguments>
+#./rq.sh <name of file to execute with arguments> <queue name> <job name> <cores> <node name>  
 #
 #EXAMPLE:
-#./rq.sh N-Body un8 fatnodes "/home13/jburkhar/N-Body/mpinbody_no -DT 86548 -T 364 -G 6.67E-12 -f /home13/jburkhar/N-Body/galaxy.dat"
+#./rq.sh "/home13/jburkhar/N-Body/mpinbody_no -DT 86548 -T 364 -G 6.67E-12 -f /home13/jburkhar/N-Body/galaxy.dat" fatnodes N-Body 32 un8
 #
 #Note: the name of the file to execute and the command line argumenst must be surrounded by quotes ("") so they can be accepted as a single parameter to this script
 
 echo "#!/bin/bash -l
-#PBS -N ${1:-'jburkhart_default_jobname'}
+#PBS -N ${3:-'jburkhart_default_jobname'}
 #PBS -o /home13/jburkhar/research/out/queue_output/
 #PBS -e /home13/jburkhar/research/out/queue_output/
 #PBS -d /home13/jburkhar/research/out/queue_output/
-#PBS -l nodes=${2:-'un8'}
-#PBS -q ${3:-'fatnodes'}
+#PBS -l nodes=${5:-'1'}:ppn=${4:-'12'}
+#PBS -q ${2:-'fatnodes'}
 
 # Load any modules needed to run your software
 module load stacks
@@ -40,6 +40,6 @@ module load velvet
 #which mpirun
 
 # execute program here:
-$4 " > ~/tmp_pbs.sh
-qsub -q ${3:-'fatnodes'} ~/tmp_pbs.sh
+$1 " > ~/tmp_pbs.sh
+qsub ~/tmp_pbs.sh
 rm ~/tmp_pbs.sh
