@@ -8,11 +8,14 @@
 
 echo "#!/bin/bash -l
 #PBS -N ${3:-'jburkhart_default_jobname'}
-#PBS -o /home13/jburkhar/research/out/queue_output/
-#PBS -e /home13/jburkhar/research/out/queue_output/
-#PBS -d /home13/jburkhar/research/out/queue_output/
+#PBS -o /home13/jburkhar/research/out/queue_out/
+#PBS -e /home13/jburkhar/research/out/queue_out/
+#PBS -d /home13/jburkhar/research/out/queue_out/
 #PBS -l nodes=${5:-'1'}:ppn=${4:-'12'}
 #PBS -q ${2:-'fatnodes'}
+
+# or create scratch directory in /tmp, if applicable:
+test -d /tmp/$USER || mkdir -v /tmp/$USER
 
 # Load any modules needed to run your software
 module load stacks
@@ -40,6 +43,14 @@ module load velvet
 #which mpirun
 
 # execute program here:
-$1 " > ~/tmp_pbs.sh
+$1 
+
+# copy data from scratch (or tmp) directory back to home directory for long term storage:
+/bin/cp -a /tmp/$USER/* $HOME/research/out/
+
+# clean up after ourselves so others can utilize scratch:
+/bin/rm -rf /tmp/$USER
+
+" > ~/tmp_pbs.sh
 qsub ~/tmp_pbs.sh
 rm ~/tmp_pbs.sh
