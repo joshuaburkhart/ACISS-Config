@@ -15,7 +15,7 @@ echo "#!/bin/bash -l
 #PBS -q ${2:-'fatnodes'}
 
 # or create scratch directory in /tmp, if applicable:
-test -d /tmp/$USER || mkdir -v /tmp/$USER
+rm -rfv /tmp/$USER; mkdir -v /tmp/$USER
 
 # Load any modules needed to run your software
 module load stacks
