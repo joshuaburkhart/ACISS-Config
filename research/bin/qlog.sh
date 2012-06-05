@@ -1,5 +1,7 @@
 #!/bin/bash
 
+clear
+
 exit_funct()
 {
   echo "Exiting..."
