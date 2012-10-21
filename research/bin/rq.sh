@@ -4,7 +4,7 @@
 #EXAMPLE:
 #./rq.sh "/home13/jburkhar/N-Body/mpinbody_no -DT 86548 -T 364 -G 6.67E-12 -f /home13/jburkhar/N-Body/galaxy.dat" fatnodes N-Body 32 un8
 #
-#Note: the name of the file to execute and the command line argumenst must be surrounded by quotes ("") so they can be accepted as a single parameter to this script
+#Note: the name of the file to execute and the command line arguments must be surrounded by quotes ("") so they can be accepted as a single parameter to this script
 
 echo "#!/bin/bash -l
 #PBS -N ${3:-'jburkhart_default_jobname'}
