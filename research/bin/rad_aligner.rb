@@ -16,17 +16,15 @@ class AssemblyScore
 	def initialize(name)
 		@name = name
 	end
-	def parseAlignedSeqs(bowtie_output)
-		bowtie_output.match(/t:\s+(\d+)\s+\(/)
-				    Integer($1)
-	end
 	def setCutResult(cut_output)
 		@cut_output = cut_output
-		@aligned_cut_sites = parseAlignedSeqs(@cut_output)
+		@cut_output.match(/d (\d+) a/)
+		@aligned_cut_sites = Integer($1)
 	end
 	def setRadResult(rad_output)
 		@rad_output = rad_output
-		@aligned_rad_tags = parseAlignedSeqs(@rad_output)
+		@rad_output.match(/t:\s+(\d+)\s+\(/)
+		@aligned_rad_tags = Integer($1)
 		@rad_mismatches = @rad_output.count(MISMATCH_CHAR)
 	end
 	def getActOvrExpAlignments
@@ -89,7 +87,7 @@ assembly_scores.each { |a|
 	bowtie_idx_name = Time.new.to_f.to_s.sub('.','_')
 	sleep(1)
 	%x(bowtie-build #{contigs_fa_file} #{bowtie_idx_name})
-	a.setCutResult(%x(bowtie #{bowtie_idx_name} -n0 -l#{l} -c #{cut_seq} 2>&1))
+	a.setCutResult(%x(bowtie -a -n0 -l#{l} -c #{bowtie_idx_name} #{cut_seq} 2>&1))
 	a.setRadResult(%x(bowtie #{bowtie_idx_name} -n#{n} -l#{l} #{BEST} -f #{rad_fasta_file} 2>&1))
 }
 
