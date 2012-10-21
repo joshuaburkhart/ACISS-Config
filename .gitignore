@@ -1,0 +1,13 @@
+research/
+.ssh/
+media/
+queue_output/
+tmp/
+.bash_history
+.DS_Store
+.Xauthority
+.mozilla/
+.subversion/
+.thumbnails/
+.*/
+.*
