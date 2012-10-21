@@ -89,7 +89,7 @@ assembly_scores.each { |a|
 	bowtie_idx_name = Time.new.to_f.to_s.sub('.','_')
 	sleep(1)
 	%x(bowtie-build #{contigs_fa_file} #{bowtie_idx_name})
-	a.setCutResult(%x(bowtie #{bowtie_idx_name} -n#{n} -l#{l} #{BEST} -c #{cut_seq} 2>&1))
+	a.setCutResult(%x(bowtie #{bowtie_idx_name} -n0 -l#{l} -c #{cut_seq} 2>&1))
 	a.setRadResult(%x(bowtie #{bowtie_idx_name} -n#{n} -l#{l} #{BEST} -f #{rad_fasta_file} 2>&1))
 }
 
