@@ -83,6 +83,7 @@ se_seq_size = se_seq.size
 puts "validating RAD tags..."
 while(rad_fasta_line)
     print "."
+    STDOUT.flush
     if(rad_fasta_line.match(/^>/))
         rad_tag_name = rad_fasta_line
     else
