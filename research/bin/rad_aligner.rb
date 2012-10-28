@@ -109,8 +109,8 @@ puts
 rad_tags.close
 
 #bowtie args
-n = 3
-l = se_seq_size
+cut_seq_size = cut_seq.size
+MAX_MISMATCHES = 3
 
 puts "aligning sequences to reference(s)..."
 assembly_scores.each { |a|
@@ -120,8 +120,8 @@ assembly_scores.each { |a|
     bowtie_idx_name = Time.new.to_f.to_s.sub('.','_')
     sleep(1)
     %x(bowtie-build #{contigs_fa_file} #{bowtie_idx_name})
-    a.setCutResult(%x(bowtie -a -n0 -l#{l} -c #{bowtie_idx_name} #{cut_seq} 2>&1))
-    a.setRadResult(%x(bowtie #{bowtie_idx_name} -n#{n} -l#{l} #{BEST} -f #{rad_fasta_file} 2>&1))
+    a.setCutResult(%x(bowtie -a -n0 -l#{cut_seq_size} -c #{bowtie_idx_name} #{cut_seq} 2>&1))
+    a.setRadResult(%x(bowtie #{bowtie_idx_name} -n#{MAX_MISMATCHES} -l#{se_seq_size} #{BEST} -f #{rad_fasta_file} 2>&1))
     %x(rm -f #{bowtie_idx_name}.*)
 }
 puts "\nsequences aligned"
