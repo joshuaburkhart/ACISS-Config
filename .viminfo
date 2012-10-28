@@ -8,7 +8,7 @@
 # hlsearch on (H) or off (h):
 ~H
 # Last Search Pattern:
-~MSle0~/puts
+~MSle0~/end
 
 # Last Substitute Search Pattern:
 ~MSle0&^
@@ -20,10 +20,6 @@ $
 :wq
 :q
 :w
-:Q
-:34
-:96
-:86
 :q!
 :x
 :255
@@ -67,9 +63,18 @@ $
 :syntax off
 :s/^/# /
 :!
+:78
+:89
+:150
+:227
 
 # Search String History (newest to oldest):
-?/puts
+?/inputdir
+?/end
+? \<rad_fasta_line\>
+?/indexname
+?/index
+?/indexdir
 ?/preprocess
 ?/JOB_ID
 ? ^\d\{3}ÿ
@@ -114,11 +119,6 @@ $
 ?/ref_chrm
 ?/crit
 ?/X
-?/matrx_inv
-?/funct
-?/test_funct
-?/inv
-?/test_matrx_det
 
 # Expression History (newest to oldest):
 
@@ -128,196 +128,148 @@ $
 
 # Registers:
 "0	CHAR	0
-	t:\s+(\d+)\s+\(
-"1	LINE	0
-		end
+	/scratch/$USER/\$PBS_JOBID/$inputfile1
+""1	LINE	0
+	syntax on
 "2	LINE	0
-					    Integer($1)
+	set number
 "3	LINE	0
-			bowtie_output.match(/t:\s+(\d+)\s+\(/)
+	filetype indent on
 "4	LINE	0
-		def parseAlignedSeqs(bowtie_output)
+	source $VIMRUNTIME/macros/matchit.vim
 "5	LINE	0
-	
-"6	CHAR	0
-	>
-	
-	>152
-	
-	>153
-	
-	>154
-	
-	>155
-	
-	>156
-	
-	>157
-	
-	>158
-	
-	>159
-	
-	>160
-	
-	>161
-	
-	>162
-	
-	>163
-	
-	>164
-	
-	>165
-	
-	>166
-	
-	>167
-	
-	>168
-	
-	>169
-	
-	>170
-	
-	>171
-	
-	>172
-	
-	>173
-	
-	>174
-	
-	>175
+	autocmd BufEnter *.m compiler mlint
+"6	LINE	0
 	
 "7	LINE	0
-	ID
+	
 "8	LINE	0
-	>Catalog
+	for i in 1..(ARGV.length - 2)
+		assembly_scores << AssemblyScore.new(ARGV[i])
+	end
 "9	LINE	0
-	require 'digest'
-""-	CHAR	0
-	/
+	cp $2 /scratch/$USER/\$PBS_JOBID/ && \
+"-	CHAR	0
+		
 
 # File marks:
-'0  13  1  ~/.gitignore
-'1  12  1  ~/.gitignore
-'2  11  11  ~/.gitignore
-'3  9  8  ~/.gitignore
-'4  6  12  ~/.gitignore
-'5  8  2  ~/.gitignore
-'6  5  3  ~/.gitignore
-'7  4  12  ~/.gitignore
-'8  2  4  ~/.gitignore
-'9  1  8  ~/.gitignore
+'0  14  4  ~/.gitignore
+'1  1  0  ~/research/bin/rad_aligner.rb
+'2  28  7  ~/research/bin/rad_aligner.rb
+'3  9  34  ~/.vimrc
+'4  33  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+'5  35  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+'6  37  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+'7  27  29  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+'8  36  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+'9  38  194  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
 
 # Jumplist (newest first):
--'  13  1  ~/.gitignore
--'  12  0  ~/.gitignore
--'  11  0  ~/.gitignore
--'  9  0  ~/.gitignore
--'  6  0  ~/.gitignore
--'  8  0  ~/.gitignore
--'  5  0  ~/.gitignore
--'  4  0  ~/.gitignore
--'  2  0  ~/.gitignore
--'  1  0  ~/.gitignore
--'  1  14  ~/research/bin/rad_aligner.rb
--'  27  2  ~/research/bin/rad_aligner.rb
--'  20  4  ~/tmp/mock_rad_tags.fasta
--'  19  8  ~/research/bin/rad_aligner.rb
--'  90  1  ~/research/bin/rad_aligner.rb
--'  210204  0  ~/research/rad_tags_only.fa
--'  1  0  ~/research/rad_tags_only.fa
--'  89  49  ~/tmp/rad_aligner.rb
--'  14  1  ~/tmp/rad_aligner.rb
--'  33  2  ~/tmp/rad_aligner.rb
--'  40  1  ~/tmp/rad_aligner.rb
--'  1  0  ~/tmp/rad_aligner.rb
--'  44  48  ~/tmp/rad_aligner.rb
--'  75  5  ~/tmp/rad_aligner.rb
--'  70  1  ~/tmp/rad_aligner.rb
--'  2  0  ~/tmp/mock_rad_tags.fasta
--'  78  6  ~/tmp/rad_aligner.rb
--'  77  6  ~/tmp/rad_aligner.rb
--'  76  6  ~/tmp/rad_aligner.rb
--'  110  0  ~/tmp/rad_aligner.rb
--'  83  2  ~/tmp/rad_aligner.rb
--'  59  1  ~/tmp/rad_aligner.rb
--'  5  0  ~/tmp/rad_aligner.rb
--'  94  1  ~/tmp/rad_aligner.rb
--'  84  0  ~/tmp/rad_aligner.rb
--'  65  0  ~/tmp/rad_aligner.rb
--'  61  0  ~/tmp/rad_aligner.rb
--'  57  0  ~/tmp/rad_aligner.rb
--'  51  0  ~/tmp/rad_aligner.rb
--'  47  0  ~/tmp/rad_aligner.rb
--'  8  0  ~/tmp/rad_aligner.rb
--'  91  6  ~/tmp/rad_aligner.rb
--'  92  0  ~/tmp/rad_aligner.rb
--'  28  0  ~/tmp/rad_aligner.rb
--'  13  0  ~/tmp/rad_aligner.rb
--'  66  10  ~/tmp/rad_aligner.rb
--'  16  0  ~/tmp/rad_aligner.rb
--'  87  7  ~/tmp/rad_aligner.rb
--'  3  109  ~/tmp/rad_aligner.rb
--'  82  0  ~/tmp/rad_aligner.rb
--'  63  0  ~/tmp/rad_aligner.rb
--'  55  0  ~/tmp/rad_aligner.rb
--'  49  0  ~/tmp/rad_aligner.rb
--'  45  0  ~/tmp/rad_aligner.rb
--'  6  0  ~/tmp/rad_aligner.rb
--'  88  6  ~/tmp/rad_aligner.rb
--'  26  0  ~/tmp/rad_aligner.rb
--'  81  2  ~/tmp/rad_aligner.rb
--'  11  0  ~/tmp/rad_aligner.rb
--'  64  10  ~/tmp/rad_aligner.rb
--'  31  1  ~/tmp/rad_aligner.rb
--'  43  0  ~/tmp/rad_aligner.rb
--'  85  7  ~/tmp/rad_aligner.rb
--'  116  0  ~/tmp/rad_aligner.rb
--'  93  1  ~/tmp/rad_aligner.rb
--'  86  7  ~/tmp/rad_aligner.rb
--'  114  0  ~/tmp/rad_aligner.rb
--'  80  2  ~/tmp/rad_aligner.rb
--'  109  0  ~/tmp/rad_aligner.rb
--'  115  0  ~/tmp/rad_aligner.rb
--'  113  0  ~/tmp/rad_aligner.rb
--'  79  2  ~/tmp/rad_aligner.rb
--'  101  1  ~/tmp/rad_aligner.rb
--'  72  0  ~/tmp/rad_aligner.rb
--'  68  0  ~/tmp/rad_aligner.rb
--'  58  0  ~/tmp/rad_aligner.rb
--'  54  0  ~/tmp/rad_aligner.rb
--'  98  6  ~/tmp/rad_aligner.rb
--'  99  0  ~/tmp/rad_aligner.rb
--'  73  10  ~/tmp/rad_aligner.rb
--'  97  0  ~/tmp/rad_aligner.rb
--'  95  7  ~/tmp/rad_aligner.rb
--'  90  6  ~/tmp/rad_aligner.rb
--'  89  49  ~/tmp/rad_aligner.rb
--'  14  1  ~/tmp/rad_aligner.rb
--'  33  2  ~/tmp/rad_aligner.rb
--'  40  1  ~/tmp/rad_aligner.rb
--'  1  0  ~/tmp/rad_aligner.rb
--'  44  48  ~/tmp/rad_aligner.rb
--'  75  5  ~/tmp/rad_aligner.rb
--'  70  1  ~/tmp/rad_aligner.rb
--'  78  6  ~/tmp/rad_aligner.rb
--'  77  6  ~/tmp/rad_aligner.rb
--'  76  6  ~/tmp/rad_aligner.rb
--'  110  0  ~/tmp/rad_aligner.rb
--'  83  2  ~/tmp/rad_aligner.rb
--'  59  1  ~/tmp/rad_aligner.rb
--'  5  0  ~/tmp/rad_aligner.rb
--'  94  1  ~/tmp/rad_aligner.rb
+-'  14  4  ~/.gitignore
+-'  13  0  ~/.gitignore
+-'  1  0  ~/research/bin/rad_aligner.rb
+-'  28  8  ~/research/bin/rad_aligner.rb
+-'  9  34  ~/.vimrc
+-'  1  0  ~/.vimrc
+-'  26  47  ~/research/bin/rad_aligner.rb
+-'  71  13  ~/research/bin/rad_aligner.rb
+-'  33  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+-'  26  5  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+-'  18  9  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+-'  35  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+-'  37  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+-'  40  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+-'  27  29  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  33  11  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  29  37  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  36  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  38  194  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  5  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  41  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  35  91  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  32  51  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  31  55  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  16  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  31  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+-'  3  63  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+-'  30  65  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+-'  39  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_preprocess.sh
+-'  34  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_preprocess.sh
+-'  37  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
+-'  31  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
+-'  35  73  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  36  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  19  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_preprocess.sh
+-'  15  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  32  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  8  53  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_stats.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_stats.sh
+-'  39  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_dist.sh
+-'  5  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_dist.sh
+-'  31  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_preprocess.sh
+-'  27  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_preprocess.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+-'  31  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+-'  10  7  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  30  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  21  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  27  296  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  60  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  16  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  19  0  ~/tmp/bowtie_reference_test.fastq
+-'  1  0  ~/tmp/bowtie_reference_test.fastq
+-'  1  0  ~/tmp/bowtie_reference_test.fasta
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/output/qsub_jobs.log
+-'  30  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_dist.sh
+-'  33  193  /ibrix/home11/mmiller/Wyeomyia/tools/qlog.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/qlog.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/doc/info.txt
+-'  48  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  20  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  8  0  /ibrix/home11/mmiller/Wyeomyia/tools
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/output/queue_out/wyeomyia_kmer_filter.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_
+-'  30  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+-'  19  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  51  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  27  28  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
+-'  26  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
+-'  56  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  3  188  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+-'  36  6  ~/tmp/mexget.c
+-'  1  0  ~/tmp/mexget.c
+-'  2  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
+-'  10  4  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
+-'  4  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
+-'  13  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
+-'  27  318  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+-'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  8  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  17  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  24  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  55  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
+-'  18  14  ~/.profile
+-'  20  0  ~/.profile
+-'  17  0  ~/.profile
+-'  21  0  ~/.profile
+-'  8  7  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  5  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  8  7  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  9  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+-'  19  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+-'  20  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
 
 # History of marks within files (newest to oldest):
 
 > ~/.gitignore
-	"	13	1
-	^	13	2
-	.	13	1
+	"	14	4
+	^	14	5
+	.	14	4
 	+	1	8
 	+	2	4
 	+	4	12
@@ -330,19 +282,477 @@ $
 	+	11	11
 	+	12	1
 	+	13	1
+	+	14	4
 
 > ~/research/bin/rad_aligner.rb
-	"	1	14
-	^	27	33
-	.	27	32
-	+	90	41
+	"	1	0
+	^	28	8
+	.	27	0
+	+	91	41
 	+	21	31
 	+	22	33
 	+	19	0
 	+	26	0
 	+	19	0
 	+	26	1
-	+	27	32
+	+	26	76
+	+	3	58
+	+	5	31
+	+	50	34
+	+	51	22
+	+	60	27
+	+	60	0
+	+	52	0
+	+	55	0
+	+	60	0
+	+	52	9
+	+	71	64
+	+	50	1
+	+	71	17
+	+	73	45
+	+	26	44
+	+	10	0
+	+	27	8
+	+	28	8
+	+	27	0
+
+> ~/.vimrc
+	"	9	34
+	^	9	35
+	.	9	34
+	+	1	10
+	+	4	3
+	+	9	34
+
+> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
+	"	33	0
+	^	33	0
+	.	33	0
+	+	3	25
+	+	5	27
+	+	3	63
+	+	5	85
+	+	3	65
+	+	5	93
+	+	14	18
+	+	19	0
+	+	21	0
+	+	17	9
+	+	20	22
+	+	27	0
+	+	25	14
+	+	27	0
+	+	25	25
+	+	28	57
+	+	30	53
+	+	32	0
+	+	31	60
+	+	32	83
+	+	31	40
+	+	32	111
+	+	32	164
+	+	32	110
+	+	34	15
+	+	30	65
+	+	31	61
+	+	32	99
+	+	7	7
+	+	8	7
+	+	9	11
+	+	10	7
+	+	18	53
+	+	26	25
+	+	35	117
+	+	18	166
+	+	18	10
+	+	35	0
+	+	32	114
+	+	32	116
+	+	33	1
+	+	33	120
+	+	33	0
+
+> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
+	"	37	0
+	^	31	0
+	.	40	0
+	+	20	14
+	+	22	5
+	+	20	5
+	+	22	14
+	+	23	5
+	+	24	5
+	+	23	5
+	+	22	5
+	+	20	14
+	+	22	11
+	+	20	13
+	+	23	13
+	+	25	5
+	+	28	26
+	+	2	0
+	+	1	10
+	+	3	148
+	+	10	7
+	+	15	13
+	+	27	17
+	+	31	90
+	+	31	87
+	+	31	318
+	+	31	235
+	+	31	380
+	+	31	233
+	+	3	99
+	+	10	7
+	+	8	7
+	+	7	7
+	+	23	12
+	+	31	76
+	+	31	212
+	+	31	364
+	+	31	449
+	+	22	12
+	+	31	66
+	+	31	202
+	+	31	345
+	+	31	439
+	+	17	9
+	+	18	19
+	+	21	12
+	+	28	29
+	+	29	28
+	+	31	281
+	+	31	157
+	+	20	18
+	+	21	23
+	+	22	22
+	+	23	22
+	+	31	10
+	+	41	81
+	+	41	82
+	+	42	17
+	+	31	468
+	+	3	85
+	+	5	137
+	+	10	8
+	+	31	489
+	+	3	0
+	+	3	199
+	+	5	157
+	+	9	11
+	+	10	7
+	+	12	18
+	+	13	15
+	+	14	20
+	+	20	0
+	+	26	25
+	+	31	509
+	+	31	313
+	+	31	482
+	+	31	211
+	+	31	385
+	+	31	576
+	+	30	0
+	+	31	277
+	+	31	477
+	+	31	642
+	+	31	827
+	+	31	274
+	+	31	106
+	+	31	257
+	+	31	149
+	+	31	300
+	+	31	221
+	+	31	140
+	+	31	252
+	+	31	429
+	+	31	622
+	+	32	16
+	+	33	41
+	+	34	38
+	+	35	38
+	+	36	0
+	+	37	0
+	+	37	239
+	+	39	47
+	+	40	0
+
+> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
+	"	27	29
+	^	33	12
+	.	27	29
+	+	3	27
+	+	5	29
+	+	3	87
+	+	3	62
+	+	5	74
+	+	17	10
+	+	18	18
+	+	7	7
+	+	8	7
+	+	9	11
+	+	10	7
+	+	32	4
+	+	29	59
+	+	31	55
+	+	32	51
+	+	35	91
+	+	36	17
+	+	32	68
+	+	34	16
+	+	34	0
+	+	32	71
+	+	33	79
+	+	34	3
+	+	35	124
+	+	27	31
+	+	26	20
+	+	27	37
+	+	33	11
+	+	27	29
+
+> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
+	"	34	0
+	^	31	53
+	.	31	52
+	+	29	374
+	+	29	100
+	+	29	360
+	+	27	28
+	+	3	141
+	+	9	10
+	+	8	7
+	+	7	7
+	+	14	17
+	+	7	7
+	+	8	7
+	+	9	11
+	+	10	7
+	+	22	0
+	+	24	25
+	+	19	0
+	+	5	39
+	+	5	169
+	+	29	342
+	+	29	83
+	+	5	163
+	+	12	18
+	+	13	12
+	+	14	18
+	+	5	163
+	+	29	439
+	+	29	472
+	+	38	0
+	+	30	66
+	+	32	38
+	+	33	38
+	+	34	60
+	+	35	49
+	+	36	47
+	+	37	0
+	+	30	16
+	+	31	52
+
+> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
+	"	5	105
+	^	5	106
+	.	5	101
+	+	3	18
+	+	5	19
+	+	3	113
+	+	32	207
+	+	32	312
+	+	3	141
+	+	7	8
+	+	23	13
+	+	26	13
+	+	28	17
+	+	32	282
+	+	3	8
+	+	5	10
+	+	7	7
+	+	8	7
+	+	3	158
+	+	5	66
+	+	10	8
+	+	11	18
+	+	12	16
+	+	14	13
+	+	10	9
+	+	23	22
+	+	24	22
+	+	25	5
+	+	26	21
+	+	28	18
+	+	30	25
+	+	32	47
+	+	32	208
+	+	32	331
+	+	32	32
+	+	32	195
+	+	32	0
+	+	32	201
+	+	3	48
+	+	5	103
+	+	3	28
+	+	5	30
+	+	32	296
+	+	30	0
+	+	3	53
+	+	22	23
+	+	23	26
+	+	24	26
+	+	25	9
+	+	26	25
+	+	32	142
+	+	32	349
+	+	32	71
+	+	15	44
+	+	22	12
+	+	30	30
+	+	32	169
+	+	7	7
+	+	8	7
+	+	9	11
+	+	10	7
+	+	17	18
+	+	21	0
+	+	17	18
+	+	20	0
+	+	21	0
+	+	17	2
+	+	33	50
+	+	34	52
+	+	35	0
+	+	36	0
+	+	33	43
+	+	34	42
+	+	35	41
+	+	32	68
+	+	33	54
+	+	34	53
+	+	35	53
+	+	34	54
+	+	33	57
+	+	30	0
+	+	14	0
+	+	10	0
+	+	5	44
+	+	3	176
+	+	32	0
+	+	33	56
+	+	34	48
+	+	35	47
+	+	15	38
+	+	19	40
+	+	15	39
+	+	34	42
+	+	35	73
+	+	5	101
+	a	32	102
+
+> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+	"	38	194
+	^	38	195
+	.	38	194
+	+	5	18
+	+	6	19
+	+	5	92
+	+	6	128
+	+	5	55
+	+	6	0
+	+	6	76
+	+	6	336
+	+	6	488
+	+	6	72
+	+	6	158
+	+	6	480
+	+	6	62
+	+	6	150
+	+	6	472
+	+	6	99
+	+	6	382
+	+	20	5
+	+	22	5
+	+	23	5
+	+	24	5
+	+	29	5
+	+	20	12
+	+	22	12
+	+	23	12
+	+	24	12
+	+	29	25
+	+	13	15
+	+	6	0
+	+	17	0
+	+	6	0
+	+	1	141
+	+	32	390
+	+	26	17
+	+	2	0
+	+	1	10
+	+	3	8
+	+	5	10
+	+	7	7
+	+	8	7
+	+	32	8
+	+	3	159
+	+	5	73
+	+	10	9
+	+	14	21
+	+	15	13
+	+	17	46
+	+	18	0
+	+	20	23
+	+	22	23
+	+	23	5
+	+	22	14
+	+	23	22
+	+	22	22
+	+	24	6
+	+	28	17
+	+	32	524
+	+	32	342
+	+	32	199
+	+	32	287
+	+	32	480
+	+	20	22
+	+	3	80
+	+	7	7
+	+	8	7
+	+	9	11
+	+	10	7
+	+	22	26
+	+	23	26
+	+	24	9
+	+	29	26
+	+	21	23
+	+	20	22
+	+	18	0
+	+	17	9
+	+	18	46
+	+	32	81
+	+	32	512
+	+	21	26
+	+	32	187
+	+	32	92
+	+	33	16
+	+	34	41
+	+	35	38
+	+	36	38
+	+	37	90
+	+	38	150
+	+	39	49
+	+	40	47
+	+	5	110
+	+	29	28
+	+	30	27
+	+	38	86
+	+	38	0
+	+	38	194
+
+> ~/research/bin/auto_velveth.sh
+	"	15	266
 
 > ~/tmp/mock_rad_tags.fasta
 	"	20	4
@@ -545,344 +955,6 @@ $
 	+	36	91
 	+	19	29
 
-> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
-	"	37	0
-	^	31	53
-	.	31	52
-	+	29	374
-	+	29	100
-	+	29	360
-	+	27	28
-	+	3	141
-	+	9	10
-	+	8	7
-	+	7	7
-	+	14	17
-	+	7	7
-	+	8	7
-	+	9	11
-	+	10	7
-	+	22	0
-	+	24	25
-	+	19	0
-	+	5	39
-	+	5	169
-	+	29	342
-	+	29	83
-	+	5	163
-	+	12	18
-	+	13	12
-	+	14	18
-	+	5	163
-	+	29	439
-	+	29	472
-	+	38	0
-	+	30	66
-	+	32	38
-	+	33	38
-	+	34	60
-	+	35	49
-	+	36	47
-	+	37	0
-	+	30	16
-	+	31	52
-
-> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
-	"	35	73
-	^	35	74
-	.	35	73
-	+	3	18
-	+	5	19
-	+	3	113
-	+	32	207
-	+	32	312
-	+	3	141
-	+	7	8
-	+	23	13
-	+	26	13
-	+	28	17
-	+	32	282
-	+	3	8
-	+	5	10
-	+	7	7
-	+	8	7
-	+	3	158
-	+	5	66
-	+	10	8
-	+	11	18
-	+	12	16
-	+	14	13
-	+	10	9
-	+	23	22
-	+	24	22
-	+	25	5
-	+	26	21
-	+	28	18
-	+	30	25
-	+	32	47
-	+	32	208
-	+	32	331
-	+	32	32
-	+	32	195
-	+	32	0
-	+	32	201
-	+	3	48
-	+	5	103
-	+	3	28
-	+	5	30
-	+	32	296
-	+	30	0
-	+	3	53
-	+	22	23
-	+	23	26
-	+	24	26
-	+	25	9
-	+	26	25
-	+	32	142
-	+	32	349
-	+	32	71
-	+	15	44
-	+	22	12
-	+	30	30
-	+	32	169
-	+	7	7
-	+	8	7
-	+	9	11
-	+	10	7
-	+	17	18
-	+	21	0
-	+	17	18
-	+	20	0
-	+	21	0
-	+	17	2
-	+	33	50
-	+	34	52
-	+	35	0
-	+	36	0
-	+	33	43
-	+	34	42
-	+	35	41
-	+	32	68
-	+	33	54
-	+	34	53
-	+	35	53
-	+	34	54
-	+	33	57
-	+	30	0
-	+	14	0
-	+	10	0
-	+	5	44
-	+	3	176
-	+	32	0
-	+	33	56
-	+	34	48
-	+	35	47
-	+	15	38
-	+	19	40
-	+	15	39
-	+	34	42
-	+	35	73
-	a	32	102
-
-> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
-	"	40	0
-	^	31	0
-	.	40	0
-	+	20	14
-	+	22	5
-	+	20	5
-	+	22	14
-	+	23	5
-	+	24	5
-	+	23	5
-	+	22	5
-	+	20	14
-	+	22	11
-	+	20	13
-	+	23	13
-	+	25	5
-	+	28	26
-	+	2	0
-	+	1	10
-	+	3	148
-	+	10	7
-	+	15	13
-	+	27	17
-	+	31	90
-	+	31	87
-	+	31	318
-	+	31	235
-	+	31	380
-	+	31	233
-	+	3	99
-	+	10	7
-	+	8	7
-	+	7	7
-	+	23	12
-	+	31	76
-	+	31	212
-	+	31	364
-	+	31	449
-	+	22	12
-	+	31	66
-	+	31	202
-	+	31	345
-	+	31	439
-	+	17	9
-	+	18	19
-	+	21	12
-	+	28	29
-	+	29	28
-	+	31	281
-	+	31	157
-	+	20	18
-	+	21	23
-	+	22	22
-	+	23	22
-	+	31	10
-	+	41	81
-	+	41	82
-	+	42	17
-	+	31	468
-	+	3	85
-	+	5	137
-	+	10	8
-	+	31	489
-	+	3	0
-	+	3	199
-	+	5	157
-	+	9	11
-	+	10	7
-	+	12	18
-	+	13	15
-	+	14	20
-	+	20	0
-	+	26	25
-	+	31	509
-	+	31	313
-	+	31	482
-	+	31	211
-	+	31	385
-	+	31	576
-	+	30	0
-	+	31	277
-	+	31	477
-	+	31	642
-	+	31	827
-	+	31	274
-	+	31	106
-	+	31	257
-	+	31	149
-	+	31	300
-	+	31	221
-	+	31	140
-	+	31	252
-	+	31	429
-	+	31	622
-	+	32	16
-	+	33	41
-	+	34	38
-	+	35	38
-	+	36	0
-	+	37	0
-	+	37	239
-	+	39	47
-	+	40	0
-
-> /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
-	"	40	0
-	^	40	0
-	.	39	47
-	+	5	18
-	+	6	19
-	+	5	92
-	+	6	128
-	+	5	55
-	+	6	0
-	+	6	76
-	+	6	336
-	+	6	488
-	+	6	72
-	+	6	158
-	+	6	480
-	+	6	62
-	+	6	150
-	+	6	472
-	+	6	99
-	+	6	382
-	+	20	5
-	+	22	5
-	+	23	5
-	+	24	5
-	+	29	5
-	+	20	12
-	+	22	12
-	+	23	12
-	+	24	12
-	+	29	25
-	+	13	15
-	+	6	0
-	+	17	0
-	+	6	0
-	+	1	141
-	+	31	390
-	+	26	17
-	+	2	0
-	+	1	10
-	+	3	8
-	+	5	10
-	+	7	7
-	+	8	7
-	+	31	8
-	+	3	159
-	+	5	73
-	+	10	9
-	+	14	21
-	+	15	13
-	+	17	46
-	+	18	0
-	+	20	23
-	+	22	23
-	+	23	5
-	+	22	14
-	+	23	22
-	+	22	22
-	+	24	6
-	+	28	17
-	+	31	524
-	+	31	342
-	+	31	199
-	+	31	287
-	+	31	480
-	+	20	22
-	+	3	80
-	+	7	7
-	+	8	7
-	+	9	11
-	+	10	7
-	+	22	26
-	+	23	26
-	+	24	9
-	+	29	26
-	+	21	23
-	+	20	22
-	+	18	0
-	+	17	9
-	+	18	46
-	+	31	81
-	+	31	512
-	+	21	26
-	+	31	187
-	+	31	92
-	+	32	16
-	+	33	41
-	+	34	38
-	+	35	38
-	+	36	90
-	+	37	150
-	+	38	49
-	+	39	47
-
 > /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_dist.sh
 	"	39	0
 	^	39	0
@@ -1000,39 +1072,3 @@ $
 	+	10	23
 	+	16	11
 	+	25	15
-
-> ~/tmp/bowtie_reference_test.fastq
-	"	19	0
-	.	19	0
-	+	3	0
-	+	5	0
-	+	7	0
-	+	9	0
-	+	11	0
-	+	13	0
-	+	15	0
-	+	17	0
-	+	19	0
-	+	21	0
-	+	1	0
-	+	3	0
-	+	5	0
-	+	7	0
-	+	9	0
-	+	11	0
-	+	13	0
-	+	15	0
-	+	17	0
-	+	19	0
-
-> ~/tmp/bowtie_reference_test.fasta
-	"	1	0
-
-> /ibrix/home11/mmiller/Wyeomyia/output/qsub_jobs.log
-	"	1	0
-
-> /ibrix/home11/mmiller/Wyeomyia/tools/qlog.sh
-	"	33	193
-	^	33	194
-	.	33	193
-	+	33	193
