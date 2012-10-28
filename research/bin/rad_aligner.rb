@@ -1,8 +1,8 @@
 #!/usr/bin/ruby
 
-#Usage: ruby rad_aligner.rb <cut site cohesive end sequence> </path/to/fasta/file/with/rad/tags> </path/to/fasta/file/with/contigs/1> [ ... </path/to/fasta/file/with/contigs/n>]
+#Usage: ruby rad_aligner.rb <cut site cohesive end sequence> <cut site sticky end sequence> </path/to/fasta/file/with/rad/tags> </path/to/fasta/file/with/contigs/1> [ ... </path/to/fasta/file/with/contigs/n>]
 
-#Example: ruby rad_aligner.rb C /home13/jburkhar/tmp/mock_rad_tags.fasta /home13/jburkhar/tmp/mock_contigs.fasta
+#Example: ruby rad_aligner.rb C TGCAG /home13/jburkhar/tmp/mock_rad_tags.fasta /home13/jburkhar/tmp/mock_contigs.fasta
 
 require 'time'
 
@@ -48,42 +48,65 @@ end
 ##########
 
 ce_seq = ARGV[0]
-rad_fasta_file = ARGV[1]
-for i in 2..(ARGV.length - 2)
-    assembly_scores << AssemblyScore.new(ARGV[i])
-end
+se_seq = ARGV[1]
+rad_fasta_file = ARGV[2]
+
+puts "COHESIVE END SEQ: #{ce_seq}"
+puts "STICKY END SEQ: #{se_seq}"
+puts "RAD FASTA FILE: #{rad_fasta_file}"
+puts "ASSEMBLY FILES: "
 
 assembly_scores = Array.new
+for i in 3..(ARGV.length - 1)
+    puts ARGV[i]
+    assembly_scores << AssemblyScore.new(ARGV[i])
+end
+puts
+
+
 MISMATCH_CHAR = ">"
 BEST = "--best"
 ROUT = "--refout"
 
-#bowtie args
-n = 3
-l = 5
-
 rad_tags = File.open(rad_fasta_file)
 rad_fasta_line = rad_tags.gets
-cut_seq = ""
+rad_tag_name = "<unknown>"
+cut_seq = "#{ce_seq}#{se_seq}"
+se_seq_size = se_seq.size
+puts "validating RAD tags..."
 while(rad_fasta_line)
-    if(!rad_fasta_line.match(/^>/))
-        if(cut_seq == "")
-            cut_seq = "#{ce_seq}#{rad_fasta_line[0,5]}"
-        else
-            tmp_seq = "#{ce_seq}#{rad_fasta_line[0,5]}"
-            if(tmp_seq != "" && tmp_seq != cut_seq)
-                rad_tags.close
-                puts "RAD TAGS DO NOT HAVE MATCHING CUT SITE SEQUENCES: #{tmp_seq} != #{cut_seq}"
-                exit 1
-            end
+    print "."
+    if(rad_fasta_line.match(/^>/))
+        rad_tag_name = rad_fasta_line
+    else
+        test_seq = rad_fasta_line[0,se_seq_size]
+        if(!test_seq.match(/^[ATCG]/))
+            puts "MALFORMED FASTA FILE DETECTED"
+            puts "TAG NAME: #{rad_tag_name}"
+            exit 1
+        elsif(test_seq != se_seq)
+            rad_tags.close
+            puts "RAD TAG DOES NOT MATCH SPECIFIED CUT SITE"
+            puts "TAG NAME: #{rad_tag_name}"
+            puts "TAG FIRST #{se_seq_size} BASES: #{test_seq}"
+            puts "SPECIFIED CUT SITE SE SEQ: #{se_seq}"
+            exit 1
         end
     end
     rad_fasta_line = rad_tags.gets
 end
+puts "\nRAD tags match"
+puts
 
 rad_tags.close
 
+#bowtie args
+n = 3
+l = se_seq_size
+
+puts "aligning sequences to reference(s)..."
 assembly_scores.each { |a|
+    print "."
     contigs_fa_file = a.name
     bowtie_idx_name = Time.new.to_f.to_s.sub('.','_')
     sleep(1)
@@ -91,9 +114,12 @@ assembly_scores.each { |a|
     a.setCutResult(%x(bowtie -a -n0 -l#{l} -c #{bowtie_idx_name} #{cut_seq} 2>&1))
     a.setRadResult(%x(bowtie #{bowtie_idx_name} -n#{n} -l#{l} #{BEST} -f #{rad_fasta_file} 2>&1))
 }
+puts "\nsequences aligned"
+puts
 
 assembly_scores.sort { |i,j| i.getActOvrExpAlignments <=> j.getActOvrExpAlignments }
 
+puts "writing results to file system..."
 summary_file = File.open('assembly_score_summaries.txt','w')
 summary_file.print "ASSEMBLY SCORE SUMMARIES\n"
 summary_file.print "========================\n\n"
@@ -106,3 +132,4 @@ assembly_scores.each { |a|
     summary_file.puts
 }
 summary_file.close
+puts "finished"

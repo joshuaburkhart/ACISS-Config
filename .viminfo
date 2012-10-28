@@ -8,7 +8,7 @@
 # hlsearch on (H) or off (h):
 ~H
 # Last Search Pattern:
-~MSle0~/end
+~MSle0~/1
 
 # Last Substitute Search Pattern:
 ~MSle0&^
@@ -19,8 +19,8 @@ $
 # Command Line History (newest to oldest):
 :wq
 :q
-:w
 :q!
+:w
 :x
 :255
 :42
@@ -69,6 +69,7 @@ $
 :227
 
 # Search String History (newest to oldest):
+?/1
 ?/inputdir
 ?/end
 ? \<rad_fasta_line\>
@@ -118,7 +119,6 @@ $
 ?/f_label
 ?/ref_chrm
 ?/crit
-?/X
 
 # Expression History (newest to oldest):
 
@@ -128,51 +128,84 @@ $
 
 # Registers:
 "0	CHAR	0
-	/scratch/$USER/\$PBS_JOBID/$inputfile1
-""1	LINE	0
-	syntax on
+	CCGTAG
+"1	LINE	0
+	    puts "i: #{i}"
 "2	LINE	0
-	set number
+	puts "3: #{ARGV[3]}"
 "3	LINE	0
-	filetype indent on
+	puts "2: #{ARGV[2]}"
 "4	LINE	0
-	source $VIMRUNTIME/macros/matchit.vim
+	puts "1: #{ARGV[1]}"
 "5	LINE	0
-	autocmd BufEnter *.m compiler mlint
+	puts "0: #{ARGV[0]}"
 "6	LINE	0
-	
-"7	LINE	0
-	
+	puts "length: #{ARGV.length}"
+"7	BLOCK	3
+	" + 
+	" + 
+	" + 
 "8	LINE	0
-	for i in 1..(ARGV.length - 2)
-		assembly_scores << AssemblyScore.new(ARGV[i])
-	end
+	puts "COHESIVE END SEQ: #{ce_seq}"
+	puts "STICKY END SEQ: #{se_seq}"
+	puts "RAD FASTA FILE: #{rad_fasta_file}"
+	puts "ASSEMBLY FILES: "
 "9	LINE	0
-	cp $2 /scratch/$USER/\$PBS_JOBID/ && \
-"-	CHAR	0
-		
+	
+""-	CHAR	0
+	 
 
 # File marks:
-'0  14  4  ~/.gitignore
-'1  1  0  ~/research/bin/rad_aligner.rb
-'2  28  7  ~/research/bin/rad_aligner.rb
-'3  9  34  ~/.vimrc
-'4  33  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
-'5  35  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
-'6  37  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
-'7  27  29  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
-'8  36  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_correct.sh
-'9  38  194  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
+'0  135  5  ~/research/bin/rad_aligner.rb
+'1  61  9  ~/research/bin/rad_aligner.rb
+'2  60  27  ~/research/bin/rad_aligner.rb
+'3  60  28  ~/research/bin/rad_aligner.rb
+'4  60  19  ~/research/bin/rad_aligner.rb
+'5  61  17  ~/research/bin/rad_aligner.rb
+'6  64  3  ~/research/bin/rad_aligner.rb
+'7  59  0  ~/research/bin/rad_aligner.rb
+'8  20  0  ~/tmp/mock_rad_tags.fasta
+'9  83  37  ~/research/bin/rad_aligner.rb
 
 # Jumplist (newest first):
+-'  135  5  ~/research/bin/rad_aligner.rb
+-'  61  4  ~/research/bin/rad_aligner.rb
+-'  60  0  ~/research/bin/rad_aligner.rb
+-'  64  0  ~/research/bin/rad_aligner.rb
+-'  65  0  ~/research/bin/rad_aligner.rb
+-'  59  0  ~/research/bin/rad_aligner.rb
+-'  83  8  ~/research/bin/rad_aligner.rb
+-'  20  0  ~/tmp/mock_rad_tags.fasta
+-'  21  0  ~/tmp/mock_rad_tags.fasta
+-'  70  0  ~/research/bin/rad_aligner.rb
+-'  17  13  ~/tmp/mock_rad_tags.fasta
+-'  15  13  ~/tmp/mock_rad_tags.fasta
+-'  13  13  ~/tmp/mock_rad_tags.fasta
+-'  11  13  ~/tmp/mock_rad_tags.fasta
+-'  9  13  ~/tmp/mock_rad_tags.fasta
+-'  7  13  ~/tmp/mock_rad_tags.fasta
+-'  5  13  ~/tmp/mock_rad_tags.fasta
+-'  3  13  ~/tmp/mock_rad_tags.fasta
+-'  1  13  ~/tmp/mock_rad_tags.fasta
+-'  19  13  ~/tmp/mock_rad_tags.fasta
+-'  22  0  ~/tmp/mock_rad_tags.fasta
+-'  18  0  ~/tmp/mock_rad_tags.fasta
+-'  20  0  ~/tmp/mock_contigs.fasta
+-'  21  0  ~/tmp/mock_contigs.fasta
+-'  71  0  ~/research/bin/rad_aligner.rb
+-'  87  8  ~/research/bin/rad_aligner.rb
+-'  92  12  ~/research/bin/rad_aligner.rb
+-'  125  0  ~/research/bin/rad_aligner.rb
+-'  6  0  ~/tmp/mock_rad_tags.fasta
+-'  1  0  ~/research/bin/rad_aligner.rb
+-'  111  52  ~/research/bin/rad_aligner.rb
 -'  14  4  ~/.gitignore
 -'  13  0  ~/.gitignore
--'  1  0  ~/research/bin/rad_aligner.rb
 -'  28  8  ~/research/bin/rad_aligner.rb
 -'  9  34  ~/.vimrc
 -'  1  0  ~/.vimrc
 -'  26  47  ~/research/bin/rad_aligner.rb
--'  71  13  ~/research/bin/rad_aligner.rb
+-'  82  13  ~/research/bin/rad_aligner.rb
 -'  33  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
 -'  26  5  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
 -'  18  9  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_index.sh
@@ -230,41 +263,206 @@ $
 -'  48  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
 -'  20  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
 -'  8  0  /ibrix/home11/mmiller/Wyeomyia/tools
--'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools
--'  1  0  /ibrix/home11/mmiller/Wyeomyia/output/queue_out/wyeomyia_kmer_filter.sh
--'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_
--'  30  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
--'  19  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  51  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  27  28  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
--'  26  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_process_shortreads.sh
--'  56  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  3  188  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
--'  36  6  ~/tmp/mexget.c
--'  1  0  ~/tmp/mexget.c
--'  2  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
--'  1  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
--'  10  4  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
--'  4  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
--'  13  0  /ibrix/home11/mmiller/Wyeomyia/doc/executions.txt
--'  27  318  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_kmer_filter.sh
--'  1  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  8  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  17  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  24  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  55  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_rq.sh
--'  18  14  ~/.profile
--'  20  0  ~/.profile
--'  17  0  ~/.profile
--'  21  0  ~/.profile
--'  8  7  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
--'  5  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
--'  8  7  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
--'  9  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
--'  19  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velvetg.sh
--'  20  0  /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_velveth.sh
 
 # History of marks within files (newest to oldest):
+
+> ~/research/bin/rad_aligner.rb
+	"	135	5
+	^	135	6
+	.	135	6
+	+	10	0
+	+	27	8
+	+	28	8
+	+	27	0
+	+	3	91
+	+	5	37
+	+	51	15
+	+	52	22
+	+	60	9
+	+	87	0
+	+	82	0
+	+	74	29
+	+	82	50
+	+	87	15
+	+	82	15
+	+	87	18
+	+	89	37
+	+	77	0
+	+	73	24
+	+	79	34
+	+	81	0
+	+	82	8
+	+	87	8
+	+	88	11
+	+	89	12
+	+	93	12
+	+	94	0
+	+	89	36
+	+	77	26
+	+	82	43
+	+	89	60
+	+	91	51
+	+	92	43
+	+	91	60
+	+	92	52
+	+	77	15
+	+	82	37
+	+	91	31
+	+	92	39
+	+	87	24
+	+	71	14
+	+	75	0
+	+	70	0
+	+	103	0
+	+	70	0
+	+	85	43
+	+	87	12
+	+	86	17
+	+	84	47
+	+	83	37
+	+	76	28
+	+	78	12
+	+	98	22
+	+	107	39
+	+	109	12
+	+	117	25
+	+	122	39
+	+	128	0
+	+	135	16
+	+	67	0
+	+	59	0
+	+	59	0
+	+	48	10
+	+	48	9
+	+	65	34
+	+	66	15
+	+	66	0
+	+	65	0
+	+	54	0
+	+	61	15
+	+	65	0
+	+	64	3
+	+	60	15
+	+	60	11
+	+	61	17
+	+	60	17
+	+	60	12
+	+	60	12
+	+	60	12
+	+	60	12
+	+	61	20
+	+	60	10
+	+	60	0
+	+	60	11
+	+	60	17
+	+	60	18
+	+	60	0
+	+	60	19
+	+	60	19
+	+	60	19
+	+	60	19
+	+	60	28
+	+	60	27
+	+	53	0
+	+	58	0
+	+	60	0
+	+	61	9
+	+	99	3
+	+	118	3
+	+	135	6
+
+> ~/tmp/mock_rad_tags.fasta
+	"	20	0
+	^	1	14
+	.	21	0
+	+	20	100
+	+	1	9
+	+	4	9
+	+	6	9
+	+	8	9
+	+	10	9
+	+	12	9
+	+	14	9
+	+	16	9
+	+	18	9
+	+	20	10
+	+	1	26
+	+	4	7
+	+	6	19
+	+	8	20
+	+	10	0
+	+	12	0
+	+	14	0
+	+	16	13
+	+	18	15
+	+	20	36
+	+	1	5
+	+	4	5
+	+	6	4
+	+	8	4
+	+	10	4
+	+	12	4
+	+	14	4
+	+	16	4
+	+	18	4
+	+	20	4
+	+	22	0
+	+	20	0
+	+	18	0
+	+	16	0
+	+	14	0
+	+	12	0
+	+	10	0
+	+	8	0
+	+	6	0
+	+	4	0
+	+	1	0
+	+	22	0
+	+	21	0
+	+	1	13
+	+	3	0
+	+	5	0
+	+	7	0
+	+	9	0
+	+	11	0
+	+	13	0
+	+	15	0
+	+	17	0
+	+	19	0
+	+	1	13
+	+	5	13
+	+	7	13
+	+	9	13
+	+	11	13
+	+	13	13
+	+	15	13
+	+	17	13
+	+	19	13
+	+	18	1
+	+	16	1
+	+	14	1
+	+	12	1
+	+	10	1
+	+	8	1
+	+	6	1
+	+	4	1
+	+	2	0
+	+	4	0
+	+	6	0
+	+	8	0
+	+	10	0
+	+	12	0
+	+	14	0
+	+	16	0
+	+	18	0
+	+	20	0
+	+	21	0
+
+> ~/tmp/mock_contigs.fasta
+	"	20	0
+	^	21	0
+	.	20	100
+	+	20	100
 
 > ~/.gitignore
 	"	14	4
@@ -283,38 +481,6 @@ $
 	+	12	1
 	+	13	1
 	+	14	4
-
-> ~/research/bin/rad_aligner.rb
-	"	1	0
-	^	28	8
-	.	27	0
-	+	91	41
-	+	21	31
-	+	22	33
-	+	19	0
-	+	26	0
-	+	19	0
-	+	26	1
-	+	26	76
-	+	3	58
-	+	5	31
-	+	50	34
-	+	51	22
-	+	60	27
-	+	60	0
-	+	52	0
-	+	55	0
-	+	60	0
-	+	52	9
-	+	71	64
-	+	50	1
-	+	71	17
-	+	73	45
-	+	26	44
-	+	10	0
-	+	27	8
-	+	28	8
-	+	27	0
 
 > ~/.vimrc
 	"	9	34
@@ -754,43 +920,6 @@ $
 > ~/research/bin/auto_velveth.sh
 	"	15	266
 
-> ~/tmp/mock_rad_tags.fasta
-	"	20	4
-	^	20	5
-	.	21	0
-	+	20	100
-	+	1	9
-	+	3	9
-	+	5	9
-	+	7	9
-	+	9	9
-	+	11	9
-	+	13	9
-	+	15	9
-	+	17	9
-	+	19	10
-	+	2	26
-	+	4	7
-	+	6	19
-	+	8	20
-	+	10	0
-	+	12	0
-	+	14	0
-	+	16	13
-	+	18	15
-	+	20	36
-	+	2	5
-	+	4	5
-	+	6	4
-	+	8	4
-	+	10	4
-	+	12	4
-	+	14	4
-	+	16	4
-	+	18	4
-	+	20	4
-	+	21	0
-
 > ~/research/rad_tags_only.fa
 	"	210204	0
 	.	210205	0
@@ -913,12 +1042,6 @@ $
 	+	3	46
 	+	4	89
 	+	6	20
-
-> ~/tmp/mock_contigs.fasta
-	"	21	0
-	^	21	0
-	.	20	100
-	+	20	100
 
 > /ibrix/home11/mmiller/Wyeomyia/tools/wyeomyia_sga_preprocess.sh
 	"	39	0
