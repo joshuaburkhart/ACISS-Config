@@ -115,6 +115,7 @@ l = se_seq_size
 puts "aligning sequences to reference(s)..."
 assembly_scores.each { |a|
     print "."
+    STDOUT.flush
     contigs_fa_file = a.name
     bowtie_idx_name = Time.new.to_f.to_s.sub('.','_')
     sleep(1)
