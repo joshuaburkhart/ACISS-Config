@@ -129,46 +129,45 @@ $
 # Registers:
 "0	CHAR	0
 	CCGTAG
-"1	LINE	0
-	    puts "i: #{i}"
-"2	LINE	0
-	puts "3: #{ARGV[3]}"
-"3	LINE	0
-	puts "2: #{ARGV[2]}"
-"4	LINE	0
-	puts "1: #{ARGV[1]}"
-"5	LINE	0
-	puts "0: #{ARGV[0]}"
-"6	LINE	0
-	puts "length: #{ARGV.length}"
-"7	BLOCK	3
-	" + 
-	" + 
-	" + 
-"8	LINE	0
-	puts "COHESIVE END SEQ: #{ce_seq}"
-	puts "STICKY END SEQ: #{se_seq}"
-	puts "RAD FASTA FILE: #{rad_fasta_file}"
-	puts "ASSEMBLY FILES: "
-"9	LINE	0
+""1	LINE	0
 	
-""-	CHAR	0
+"2	LINE	0
+	    a.name.match(/^(.+\/)[^\/]+$/)
+	    indexdir = $1
+"3	LINE	0
+	    puts "index dir: #{indexdir}"
+"4	LINE	0
+	    %(rm -f 
+"5	LINE	0
+	    puts "i: #{i}"
+"6	LINE	0
+	puts "3: #{ARGV[3]}"
+"7	LINE	0
+	puts "2: #{ARGV[2]}"
+"8	LINE	0
+	puts "1: #{ARGV[1]}"
+"9	LINE	0
+	puts "0: #{ARGV[0]}"
+"-	CHAR	0
 	 
 
 # File marks:
-'0  135  5  ~/research/bin/rad_aligner.rb
-'1  61  9  ~/research/bin/rad_aligner.rb
-'2  60  27  ~/research/bin/rad_aligner.rb
-'3  60  28  ~/research/bin/rad_aligner.rb
-'4  60  19  ~/research/bin/rad_aligner.rb
-'5  61  17  ~/research/bin/rad_aligner.rb
-'6  64  3  ~/research/bin/rad_aligner.rb
-'7  59  0  ~/research/bin/rad_aligner.rb
-'8  20  0  ~/tmp/mock_rad_tags.fasta
-'9  83  37  ~/research/bin/rad_aligner.rb
+'0  111  4  ~/research/bin/rad_aligner.rb
+'1  115  0  ~/research/bin/rad_aligner.rb
+'2  119  0  ~/research/bin/rad_aligner.rb
+'3  138  5  ~/research/bin/rad_aligner.rb
+'4  61  9  ~/research/bin/rad_aligner.rb
+'5  60  27  ~/research/bin/rad_aligner.rb
+'6  60  28  ~/research/bin/rad_aligner.rb
+'7  60  19  ~/research/bin/rad_aligner.rb
+'8  61  17  ~/research/bin/rad_aligner.rb
+'9  64  3  ~/research/bin/rad_aligner.rb
 
 # Jumplist (newest first):
--'  135  5  ~/research/bin/rad_aligner.rb
+-'  111  4  ~/research/bin/rad_aligner.rb
+-'  115  4  ~/research/bin/rad_aligner.rb
+-'  119  0  ~/research/bin/rad_aligner.rb
+-'  138  0  ~/research/bin/rad_aligner.rb
 -'  61  4  ~/research/bin/rad_aligner.rb
 -'  60  0  ~/research/bin/rad_aligner.rb
 -'  64  0  ~/research/bin/rad_aligner.rb
@@ -195,10 +194,9 @@ $
 -'  71  0  ~/research/bin/rad_aligner.rb
 -'  87  8  ~/research/bin/rad_aligner.rb
 -'  92  12  ~/research/bin/rad_aligner.rb
--'  125  0  ~/research/bin/rad_aligner.rb
+-'  128  0  ~/research/bin/rad_aligner.rb
 -'  6  0  ~/tmp/mock_rad_tags.fasta
 -'  1  0  ~/research/bin/rad_aligner.rb
--'  111  52  ~/research/bin/rad_aligner.rb
 -'  14  4  ~/.gitignore
 -'  13  0  ~/.gitignore
 -'  28  8  ~/research/bin/rad_aligner.rb
@@ -267,17 +265,9 @@ $
 # History of marks within files (newest to oldest):
 
 > ~/research/bin/rad_aligner.rb
-	"	135	5
-	^	135	6
-	.	135	6
-	+	10	0
-	+	27	8
-	+	28	8
-	+	27	0
-	+	3	91
-	+	5	37
-	+	51	15
-	+	52	22
+	"	111	4
+	^	115	4
+	.	111	0
 	+	60	9
 	+	87	0
 	+	82	0
@@ -325,10 +315,10 @@ $
 	+	98	22
 	+	107	39
 	+	109	12
-	+	117	25
-	+	122	39
-	+	128	0
-	+	135	16
+	+	120	25
+	+	125	39
+	+	131	0
+	+	138	16
 	+	67	0
 	+	59	0
 	+	59	0
@@ -368,8 +358,16 @@ $
 	+	60	0
 	+	61	9
 	+	99	3
-	+	118	3
-	+	135	6
+	+	121	3
+	+	138	6
+	+	119	11
+	+	111	32
+	+	119	0
+	+	118	44
+	+	111	0
+	+	111	0
+	+	116	0
+	+	111	0
 
 > ~/tmp/mock_rad_tags.fasta
 	"	20	0
