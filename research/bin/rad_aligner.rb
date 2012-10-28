@@ -113,9 +113,7 @@ assembly_scores.each { |a|
     %x(bowtie-build #{contigs_fa_file} #{bowtie_idx_name})
     a.setCutResult(%x(bowtie -a -n0 -l#{l} -c #{bowtie_idx_name} #{cut_seq} 2>&1))
     a.setRadResult(%x(bowtie #{bowtie_idx_name} -n#{n} -l#{l} #{BEST} -f #{rad_fasta_file} 2>&1))
-    a.name.match(/^(.+\/)[^\/]+$/)
-    indexdir = $1
-    %x(rm -f #{indexdir}#{bowtie_idx_name}.*)
+    %x(rm -f #{bowtie_idx_name}.*)
 }
 puts "\nsequences aligned"
 puts
