@@ -2,7 +2,7 @@
 
 #Usage: ruby rad_aligner.rb <cut site cohesive end sequence> <cut site sticky end sequence> </path/to/fasta/file/with/rad/tags> </path/to/fasta/file/with/contigs/1> [ ... </path/to/fasta/file/with/contigs/n>]
 
-#Example: ruby rad_aligner.rb C TGCAG /home13/jburkhar/tmp/mock_rad_tags.fasta /home13/jburkhar/tmp/mock_contigs.fasta
+#Example: ruby rad_aligner.rb C CGTAG ~/tmp/mock_rad_tags.fasta ~/tmp/mock_contigs.fasta
 
 require 'time'
 
@@ -32,6 +32,13 @@ class AssemblyScore
             return (1000.0 * @aligned_rad_tags) / (2000.0 * @aligned_cut_sites)
         else
             return "NO CUT SITES ALIGNED TO REFERENCE"
+        end
+    end
+    def compare
+        if(!@aligned_rad_tags.nil? && !@ligned_cut_sites.nil? && @aligned_cut_sites != 0)
+            return getActOvrExpAlignments()
+        else
+            return -1
         end
     end
     def to_s
@@ -118,7 +125,7 @@ assembly_scores.each { |a|
 puts "\nsequences aligned"
 puts
 
-assembly_scores.sort { |i,j| i.getActOvrExpAlignments <=> j.getActOvrExpAlignments }
+assembly_scores.sort { |i,j| i.compare <=> j.compare }
 
 puts "writing results to file system..."
 summary_file = File.open('assembly_score_summaries.txt','w')
