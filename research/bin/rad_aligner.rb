@@ -28,21 +28,25 @@ class AssemblyScore
                           @rad_mismatches = @rad_output.count(MISMATCH_CHAR)
     end
     def getActOvrExpAlignments
-        if (@aligned_rad_tags != 0)
+        if (!@aligned_rad_tags.nil? && !@aligned_cut_sites.nil? && @aligned_cut_sites != 0)
             return (1000.0 * @aligned_rad_tags) / (2000.0 * @aligned_cut_sites)
         else
-            return "NO CUT SITES ALIGNED TO REFERENCE"
+            return -1
         end
     end
-    def compare
-        if(!@aligned_rad_tags.nil? && !@aligned_cut_sites.nil? && @aligned_cut_sites != 0)
-            return getActOvrExpAlignments()
+    def compareRadTags
+        if(!@aligned_rad_tags.nil?)
+            return @aligned_rad_tags
         else
             return -1
         end
     end
     def to_s
-        "FILE NAME: #{@name}\nNUMBER OF CUT SITES ALIGNED: #{@aligned_cut_sites}\nNUMBER OF RAD TAGS ALIGNED: #{@aligned_rad_tags}\nRAD SNP MISMATCHES: #{@rad_mismatches}\nACTUAL / EXPECTED: #{getActOvrExpAlignments}\n"
+        alignments = getActOvrExpAlignments()
+        if(alignments == -1)
+           alignments = "NO CUT SITES ALIGNED TO REFERENCE"
+        end
+        "FILE NAME: #{@name}\nNUMBER OF CUT SITES ALIGNED: #{@aligned_cut_sites}\nNUMBER OF RAD TAGS ALIGNED: #{@aligned_rad_tags}\nRAD SNP MISMATCHES: #{@rad_mismatches}\nACTUAL / EXPECTED: #{alignments}\n"
     end
     def to_f
         self.to_s +
@@ -128,9 +132,9 @@ puts "\nsequences aligned"
 puts
 
 assembly_scores.sort! { |i,j|
-    comp = (j.compare <=> i.compare)
+    comp = (j.getActOvrExpAlignments <=> i.getActOvrExpAlignments)
     if(comp == 0)
-        j.aligned_rad_tags <=> i.aligned_rad_tags
+        j.compareRadTags <=> i.compareRadTags
     end
 }
 
