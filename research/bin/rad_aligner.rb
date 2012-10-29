@@ -35,7 +35,7 @@ class AssemblyScore
         end
     end
     def compare
-        if(!@aligned_rad_tags.nil? && !@ligned_cut_sites.nil? && @aligned_cut_sites != 0)
+        if(!@aligned_rad_tags.nil? && !@aligned_cut_sites.nil? && @aligned_cut_sites != 0)
             return getActOvrExpAlignments()
         else
             return -1
@@ -127,7 +127,12 @@ assembly_scores.each { |a|
 puts "\nsequences aligned"
 puts
 
-assembly_scores.sort { |i,j| i.compare <=> j.compare }
+assembly_scores.sort! { |i,j|
+    comp = (j.compare <=> i.compare)
+    if(comp == 0)
+        j.aligned_rad_tags <=> i.aligned_rad_tags
+    end
+}
 
 puts "writing results to file system..."
 summary_file = File.open('assembly_score_summaries.txt','w')
