@@ -1,4 +1,5 @@
-research/
+research/out/
+research/in/
 *XXX
 .ssh/
 media/
