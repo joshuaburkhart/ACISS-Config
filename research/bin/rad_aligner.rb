@@ -132,10 +132,7 @@ puts "\nsequences aligned"
 puts
 
 assembly_scores.sort! { |i,j|
-    comp = (j.getActOvrExpAlignments <=> i.getActOvrExpAlignments)
-    if(comp == 0)
-        j.compareRadTags <=> i.compareRadTags
-    end
+    [j.getActOvrExpAlignments,j.compareRadTags] <=> [i.getActOvrExpAlignments,i.compareRadTags]
 }
 
 puts "writing results to file system..."
