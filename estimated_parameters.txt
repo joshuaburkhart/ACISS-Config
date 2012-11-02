@@ -1,0 +1,31 @@
+ESTIMATED PARAMETERS FOR:
+FILE 1: /home11/mmiller/Wyeomyia/output/kmr_fltr_out/kmer_maxfq-100K_minfq-5_k19/1130/sample_unbarcoded.fil.fq_1
+FILE 2: /home11/mmiller/Wyeomyia/output/kmr_fltr_out/kmer_maxfq-100K_minfq-5_k19/1130/sample_unbarcoded.fil.fq_2
+=========================
+
+Genome Size...............850000000
+Read Count................996244632
+Base Pair Count.........56882736940
+Average Read Length..............57.097
+Nucleotide Coverage..............66.921
+
+Kmer Coverage 20:
+Hash Length.............41.033
+Estimated Velvet RAM...290.560 GB
+
+Kmer Coverage 25:
+Hash Length.............36.767
+Estimated Velvet RAM...290.768 GB
+
+Kmer Coverage 30:
+Hash Length.............32.501
+Estimated Velvet RAM...290.976 GB
+
+Kmer Coverage 35:
+Hash Length.............28.235 (smaller than recommended)
+Estimated Velvet RAM...291.183 GB
+
+Kmer Coverage 40:
+Hash Length.............23.969 (smaller than recommended)
+Estimated Velvet RAM...291.391 GB
+

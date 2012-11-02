@@ -1,9 +1,11 @@
 #!/usr/local/packages/jruby/1.6.7.2/bin/jruby
 
+require 'thread'
 require 'optparse'
+mutex = Mutex.new
 options = {}
 
-DEFAULT_OUT_DIR = '.'
+DEFAULT_OUT_FILE = './estimated_parameters.txt'
 MILLION = 1000000
 G = 850 * MILLION
 CK_TEST_VALS = [20,25,30,35,40]
@@ -11,9 +13,9 @@ ID = @unbarcoded
 
 optparse = OptionParser.new { |opts|
     opts.banner = <<-EOS
-Usage: jruby param_ests.rb -1 </path/to/input/file/1> -2 </path/to/input/file/2> -o </path/to/output/dir>
+Usage: jruby param_ests.rb -1 </path/to/input/file/1> -2 </path/to/input/file/2> -o </path/to/output/file>
 
-Example: jruby param_ests.rb -1 /home13/jburkhar/research/out/kmer_filter_output/sample1.fq -2 /home13/jburkhar/research/out/kmer_filter/output/sample2.fq -o /home13/jburkhar/research/output/stats/
+Example: jruby param_ests.rb -1 /home13/jburkhar/research/out/kmer_filter_output/sample1.fq -2 /home13/jburkhar/research/out/kmer_filter/output/sample2.fq -o /home13/jburkhar/research/output/stats/ests_0.txt
     EOS
 
     opts.on('-h','--help','Display this screen'){
@@ -28,9 +30,13 @@ Example: jruby param_ests.rb -1 /home13/jburkhar/research/out/kmer_filter_output
     opts.on('-2','--in_file2 FILE','Input File 2'){ |file_name|
         options[:in_file2] = file_name
     }
-    options[:out_dir] = DEFAULT_OUT_DIR
-    opts.on('-o','--out_dir DIR','Output Directory'){ |dir_name|
-        options[:out_dir] = dir_name
+    options[:out_file] = DEFAULT_OUT_FILE
+    opts.on('-o','--out_file FILE','Output File'){ |file_name|
+        options[:out_file] = file_name
+    }
+    options[:progress] = MILLION
+    opts.on('-p','--progress INTVL','Progress Indicator Interval'){ |intvl|
+        options[:progress] = Integer(intvl)
     }
 }
 optparse.parse!
@@ -38,17 +44,27 @@ optparse.parse!
 puts "ARGUMENTS PASSED:"
 puts "in_file1 = #{options[:in_file1]}"
 puts "in_file2 = #{options[:in_file2]}"
-puts "out_dir = #{options[:out_dir]}"
+puts "out_file = #{options[:out_file]}"
 puts
 
-def parseFile(fh)
+def parseFile(fh,pg,mutex,ch)
     Thread.current["nbp"] = 0
     Thread.current["n"] = 0
+    progress_mon = 0
     fh_cached_line = ""
     while fh_cur_line = fh.gets
         if fh_cached_line.match(/^#{ID}/)
             Thread.current["nbp"] += fh_cur_line.size
             Thread.current["n"] += 1
+            progress_mon += 1
+            if progress_mon > pg
+                mutex.synchronize {
+                    print ch
+                    STDOUT.flush
+                }
+                progress_mon = 0
+            end
+
         end
         fh_cached_line = fh_cur_line
     end
@@ -57,17 +73,17 @@ end
 file_stats = []
 puts "working..."
 if (!options[:in_file1].nil?)
-    puts "starting t1..."
     file_stats[0] = Thread.new {
+        pg = options[:progress]
         fh = File.open(options[:in_file1])
-        parseFile(fh)
+        parseFile(fh,pg,mutex,'.')
         fh.close
     }
     if(!options[:in_file2].nil?)
-        puts "starting t2..."
         file_stats[1] = Thread.new {
+            pg = options[:progress]
             fh = File.open(options[:in_file2])
-            parseFile(fh)
+            parseFile(fh,pg,mutex,':')
             fh.close
         }
     end
@@ -80,7 +96,7 @@ if (!options[:in_file1].nil?)
     }
     l = Float(nbp) / n #avg read length
     c = Float(nbp) / G #nucleotide coverage
-    outh = File.open("#{options[:out_dir]}/estimated_parameters.txt",'w')
+    outh = File.open("#{options[:out_file]}",'w')
     outh.puts "ESTIMATED PARAMETERS FOR:"
     outh.puts "FILE 1: #{options[:in_file1]}"
     outh.puts "FILE 2: #{options[:in_file2]}"
@@ -115,6 +131,7 @@ if (!options[:in_file1].nil?)
         outh.puts
     }
     outh.close
+    puts
     puts "done."
 else
     puts "No input file specified. Exiting..."
