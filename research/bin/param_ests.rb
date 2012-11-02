@@ -1,4 +1,4 @@
-#
+#!/usr/local/packages/jruby/1.6.7.2/bin/jruby
 
 require 'optparse'
 options = {}
@@ -11,9 +11,9 @@ ID = @unbarcoded
 
 optparse = OptionParser.new { |opts|
     opts.banner = <<-EOS
-Usage: ruby param_ests.rb -1 </path/to/input/file/1> -2 </path/to/input/file/2> -o </path/to/output/dir>
+Usage: jruby param_ests.rb -1 </path/to/input/file/1> -2 </path/to/input/file/2> -o </path/to/output/dir>
 
-Example: ruby param_ests.rb -1 /home13/jburkhar/research/out/kmer_filter_output/sample1.fq -2 /home13/jburkhar/research/out/kmer_filter/output/sample2.fq -o /home13/jburkhar/research/output/stats/
+Example: jruby param_ests.rb -1 /home13/jburkhar/research/out/kmer_filter_output/sample1.fq -2 /home13/jburkhar/research/out/kmer_filter/output/sample2.fq -o /home13/jburkhar/research/output/stats/
     EOS
 
     opts.on('-h','--help','Display this screen'){
@@ -21,51 +21,54 @@ Example: ruby param_ests.rb -1 /home13/jburkhar/research/out/kmer_filter_output/
         exit
     }
     options[:in_file1] = nil
-    opts.on('-1','--in_file1','Input File 1'){ |file_name|
-        options[:in_file1] = file_name.strip
+    opts.on('-1','--in_file1 FILE','Input File 1'){ |file_name|
+        options[:in_file1] = file_name
     }
     options[:in_file2] = nil
-    opts.on('-2','--in_file2','Input File 2'){ |file_name|
-        options[:in_file2] = file_name.strip
+    opts.on('-2','--in_file2 FILE','Input File 2'){ |file_name|
+        options[:in_file2] = file_name
     }
     options[:out_dir] = DEFAULT_OUT_DIR
-    opts.on('-o','--out_dir','Output Directory'){ |dir_name|
-        options[:out_dir] = dir_name.strip
+    opts.on('-o','--out_dir DIR','Output Directory'){ |dir_name|
+        options[:out_dir] = dir_name
     }
 }
 optparse.parse!
 
-file_stats = []
+puts "ARGUMENTS PASSED:"
+puts "in_file1 = #{options[:in_file1]}"
+puts "in_file2 = #{options[:in_file2]}"
+puts "out_dir = #{options[:out_dir]}"
+puts
 
-if (!options[:in_file1].nil?)
-    file_stats[0] = Thread.new {
-        fh1 = File.open(options[:in_file1])
-        Thread.current["nbp"] = 0
-        Thread.current["n"] = 0
-        f1_cached_line = ""
-        while f1_cur_line = fh1.gets
-            if f1_cached_line.match(/^#{ID}/)
-                Thread.current["nbp"] += f1_cur_line.size
-                Thread.current["n"] += 1
-            end
-            f1_cached_line = f1_cur_line
+def parseFile(fh)
+    Thread.current["nbp"] = 0
+    Thread.current["n"] = 0
+    fh_cached_line = ""
+    while fh_cur_line = fh.gets
+        if fh_cached_line.match(/^#{ID}/)
+            Thread.current["nbp"] += fh_cur_line.size
+            Thread.current["n"] += 1
         end
-        fh1.close
+        fh_cached_line = fh_cur_line
+    end
+end
+
+file_stats = []
+puts "working..."
+if (!options[:in_file1].nil?)
+    puts "starting t1..."
+    file_stats[0] = Thread.new {
+        fh = File.open(options[:in_file1])
+        parseFile(fh)
+        fh.close
     }
     if(!options[:in_file2].nil?)
+        puts "starting t2..."
         file_stats[1] = Thread.new {
-            fh2 = File.open(options[:in_file2])
-            Thread.current["nbp"] = 0
-            Thread.current["n"] = 0
-            f2_cached_line = ""
-            while f2_cur_line = fh2.gets
-                if f2_cached_line.match(/^#{ID}/)
-                    Thread.current["nbp"] += f2_cur_line.size
-                    Thread.current["n"] += 1
-                end
-                f2_cached_line = f2_cur_line
-            end
-            fh2.close
+            fh = File.open(options[:in_file2])
+            parseFile(fh)
+            fh.close
         }
     end
     nbp = 0
@@ -75,33 +78,44 @@ if (!options[:in_file1].nil?)
         nbp += t["nbp"]
         n += t["n"]
     }
-    l = nbp / n #avg read length
-    c = nbp / G #nucleotide coverage
-    outh = File.open("estimated_parameters.txt",'w')
+    l = Float(nbp) / n #avg read length
+    c = Float(nbp) / G #nucleotide coverage
+    outh = File.open("#{options[:out_dir]}/estimated_parameters.txt",'w')
     outh.puts "ESTIMATED PARAMETERS FOR:"
     outh.puts "FILE 1: #{options[:in_file1]}"
     outh.puts "FILE 2: #{options[:in_file2]}"
     outh.puts "========================="
     outh.puts
-    outh.puts "genome size = #{G}"
-    outh.puts "number of reads = #{n}"
-    outh.puts "number of base pairs = #{nbp}"
-    outh.puts "average read length = #{l}"
-    outh.puts "nucleotide coverage = #{c}"
+
+    num_sizes = [G.to_s.size,n.to_s.size,nbp.to_s.size,Integer(l).to_s.size,Integer(c).to_s.size]
+    max_ln = num_sizes.max
+
+    outh.puts "Genome Size.............#{"."*(max_ln - G.to_s.size)}#{G}"
+    outh.puts "Read Count..............#{"."*(max_ln - n.to_s.size)}#{n}"
+    outh.puts "Base Pair Count.........#{"."*(max_ln - nbp.to_s.size)}#{nbp}"
+    outh.puts "Average Read Length.....#{"."*(max_ln - Integer(l).to_s.size)}#{"%0.3f" % l}"
+    outh.puts "Nucleotide Coverage.....#{"."*(max_ln - Integer(c).to_s.size)}#{"%0.3f" % c}"
+
     outh.puts
     CK_TEST_VALS.each { |ck|
         outh.puts "Kmer Coverage #{ck}:"
-        k = l + 1 − ((ck * G) / n)
-        outh.print "hash length = #{k}"
+        k = l + 1 - (Float(ck * G) / n)
+        est_gbs =(-109635 + 18977 * l + 86326 * (G / MILLION) + 233353 * (n / MILLION) - 51092 * k) / 1048576
+        
+        num_sizes = [Integer(est_gbs).to_s.size, Integer(k).to_s.size]
+        max_ln = num_sizes.max
+
+        outh.print "Hash Length............#{"."*(max_ln - Integer(k).to_s.size)}#{"%0.3f" % k}"
         if (k < (l / 2))
             outh.print " (smaller than recommended)"
         end
         outh.print "\n"
-        #velvet ram use estimation
-        outh.print "Estimated RAM = #{(-109635 + 18977 * l + 86326 * (G / MILLION) + 233353 * (n / MILLION) - 51092 * k) / 1048576}"
+        outh.print "Estimated Velvet RAM...#{"."*(max_ln - Integer(est_gbs).to_s.size)}#{"%0.3f" % est_gbs} GB"
         outh.puts 
+        outh.puts
     }
     outh.close
+    puts "done."
 else
     puts "No input file specified. Exiting..."
 end
