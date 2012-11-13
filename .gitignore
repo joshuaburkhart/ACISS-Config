@@ -1,6 +1,6 @@
 research/
-research/
 *XXX
+*.ebwt
 .ssh/
 media/
 queue_output/
