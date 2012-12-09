@@ -1,6 +1,7 @@
 research/
 *XXX
 software_projects/
+*.log
 *.ebwt
 .ssh/
 media/
