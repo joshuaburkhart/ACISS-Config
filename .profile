@@ -1,6 +1,6 @@
 export VIMRUNTIME='~/.vim/'
 
-module load mpi-tor/openmpi-1.5.4_gcc-4.5.3
+module load mpi-tor/openmpi-1.5.4_gcc-4.5.3/Quake/samtools/bowtie
 
 alias q='~/bin/q.sh'
 alias r='~/bin/r.sh'
@@ -13,8 +13,7 @@ alias psh='git push origin master'
 alias gav='git commit -av'
 alias wy='cd /home11/mmiller/Wyeomyia'
 alias qmon='watch "qstat -n | grep jburkhar | tr -s [:blank:]"'
-alias qlog='/home13/jburkhar/research/bin/qlog.sh'
-
+alias qlog='qlog.sh'
 ls --color=auto > /dev/null
 
 R=/home13/jburkhar/research

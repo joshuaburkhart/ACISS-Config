@@ -7,7 +7,7 @@ fi
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/bin:$HOME/research/bin:/home11/mmiller/Wyeomyia/tools
+PATH=$PATH:$HOME/bin:$HOME/software_projects/RadiQual:$HOME/software_projects/BoreKit:$HOME/software_projects/bio
 
 export PATH
 . ~/.profile
