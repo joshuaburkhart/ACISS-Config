@@ -1,6 +1,6 @@
 export VIMRUNTIME='~/.vim/'
 
-module load mpi-tor/openmpi-1.5.4_gcc-4.5.3/Quake/samtools/bowtie
+module load mpi-tor/openmpi-1.5.4_gcc-4.5.3 Quake samtools bowtie
 
 alias q='~/bin/q.sh'
 alias r='~/bin/r.sh'
