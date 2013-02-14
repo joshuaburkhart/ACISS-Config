@@ -12,7 +12,7 @@ alias pll='git pull origin master'
 alias psh='git push origin master'
 alias gav='git commit -av'
 alias wy='cd /home11/mmiller/Wyeomyia'
-alias qmon='watch "qstat -n | grep jburkhar | tr -s [:blank:]"'
+alias qmon='watch "qstat -n | grep jburkhar | tr -s [:blank:] | sort -r -k10"'
 alias qlog='qlog.sh'
 ls --color=auto > /dev/null
 
